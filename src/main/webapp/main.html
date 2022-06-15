@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>LETTA</title>
+    <link href="css/styles.css" rel="stylesheet">
+    <!--	<link rel="stylesheet"href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8"
+            crossorigin="anonymous"></script>
+    <script type="text/javascript" src="js/dao/people.js"></script>
+    <script type="text/javascript" src="js/view/people.js"></script>
+    <script type="text/javascript" src="js/dao/events.js"></script>
+    <script type="text/javascript" src="js/view/events.js"></script>
+    <script type="text/javascript" src="js/view/profile.js"></script>
+    <script type="text/javascript" src="js/login.js"></script>
+    <script type="text/javascript" src="js/view/eventSubs.js"></script>
+    <script type="text/javascript" src="js/view/receivedEvents.js"></script>
+    <script type="text/javascript" src="js/view/attendevents.js"></script>
+    <script type="text/javascript" src="js/view/users.js"></script>
+    <script type="text/javascript" src="js/dao/users.js"></script>
+</head>
+<script>
+    function getCookie(cname) {
+        let name = cname + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(';');
+        for (let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+</script>
+<script>
+    let pDao = new PeopleDAO()
+    let role = "";
+    pDao.getRole(getCookie("login"), function (person) {
+        role = person.role
+        if (role === "ADMIN") {
+            $('#adminArea').append(
+                '<div class="dropdown">\n' +
+                '    <button class="dropbtn btn btn-dark">Gestion</button>\n' +
+                '    <div class="dropdown-content">\n' +
+                '        <a id="gestionPersonas" href="#">Gestion Personas</a>\n' +
+                '        <a id="gestionUsuarios" href="#">Gestion Usuarios</a>\n' +
+                '    </div>\n' +
+                '</div>'
+            )
+        }
+    })
+</script>
+<body>
+<header>
+    <div class="navbar navbar-dark bg-dark box-shadow">
+        <div class="container d-flex justify-content-between">
+            <a id="letta" href="#" class="navbar-brand d-flex align-items-center">
+                <strong>LETTA</strong>
+            </a>
+
+            <button id="groups" class="btn btn-dark">Grupos</button>
+            <div class="dropdown">
+                <button class="dropbtn btn btn-dark">Eventos</button>
+                <div class="dropdown-content">
+                    <a id="eventsManagement" href="#">Mis Eventos</a>
+                    <a id="subscribedEvents" href="#">Futuros Eventos</a>
+                    <a id="receivedEvents" href="#">Eventos Recibidos</a>
+                </div>
+            </div>
+            <div id="adminArea"></div>
+            <button id="friends" class="btn btn-dark">Amigos</button>
+            <button id="profile" class="btn btn-dark">Perfil</button>
+            <button id="logout" class="btn btn-dark">Cerrar sesión</button>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <div id="event-container">
+
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+    $(document).ready(
+        function () {
+
+            $('#logout').click(function (event) {
+                event.preventDefault();
+                doLogout();
+            });
+
+            let view = new EventsSubsView(new EventDAO(),
+                'event-container', 'event-container', 'event-container'
+            );
+
+            view.init();
+
+            $('#profile').click(function (event) {
+                event.preventDefault();
+                $('#event-container').empty();
+                view = new ProfileView(new PeopleDAO(),
+                    'event-container'
+                );
+
+                view.init();
+            });
+
+            $('#eventsManagement').click(function (event) {
+                event.preventDefault();
+                $('#event-container').empty();
+                view = new EventsView(new EventDAO(),
+                    'event-container', 'event-container'
+                );
+
+                view.init();
+            });
+            $('#receivedEvents').click(function (event) {
+                event.preventDefault();
+                $('#event-container').empty();
+                view = new ReceivedEventsView(new EventDAO(),
+                    'event-container', 'event-container'
+                );
+
+                view.init();
+            });
+
+            $('#letta').click(function (event) {
+                event.preventDefault();
+                $('#event-container').empty();
+                view = new EventsSubsView(new EventDAO(),
+                    'event-container', 'event-container', 'event-container'
+                );
+
+                view.init();
+            });
+            console.log("role: " + role);
+            $('#gestionPersonas').click(function (event) {
+                event.preventDefault();
+                $('#event-container').empty();
+                view = new PeopleView(new PeopleDAO(),
+                    'event-container', 'event-container'
+                );
+
+                view.init();
+            });
+            $('#gestionUsuarios').click(function (event) {
+                event.preventDefault();
+                $('#event-container').empty();
+                view = new UsersView(new UserDAO(),
+                    'event-container', 'event-container'
+                );
+
+                view.init();
+            });
+
+            $('#subscribedEvents').click(function (event) {
+                event.preventDefault();
+                $('#event-container').empty();
+                view = new AttendingEventsView(new EventDAO(),
+                    'event-container', 'event-container'
+                );
+
+                view.init();
+            });
+
+        });
+</script>
+</body>
+</html>

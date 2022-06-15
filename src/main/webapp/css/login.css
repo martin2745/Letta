@@ -1,0 +1,101 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    display: -ms-flexbox;
+    display: -webkit-box;
+    display: flex;
+    -ms-flex-align: center;
+    -ms-flex-pack: center;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+#logo-image {
+    margin-bottom: 5px;
+}
+
+#form-page {
+    display: inline-flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    border: 1px black solid;
+    border-radius: 5px;
+    padding: 3vh;
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+}
+
+#form-signin {
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+
+}
+
+#form-signin .form-control {
+    position: relative;
+    box-sizing: border-box;
+    height: auto;
+    padding: 10px;
+    font-size: 16px;
+    margin: 2px;
+}
+
+#form-signin .form-control:focus {
+    z-index: 2;
+}
+
+.form-control:focus {
+    z-index: 2;
+    border-color: #FFC702 !important;
+    box-shadow: 0 0 0 0.25rem rgb(255 199 2 / 25%) !important;
+}
+
+#login {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+#password {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+#login-image {
+    width: 100vh;
+}
+
+#registerBtn {
+    margin-top: 1vh;
+}
+
+.btn-info {
+    color: #fff !important;
+    background-color: #3CDC76 !important;
+    border-color: #3CDC76 !important;
+}
+
+.btn-info:hover {
+    color: #000000 !important;
+    background-color: #FFC702 !important;
+    border-color: #FFC702 !important;
+}
+
+.btn-outline-info {
+    color: #3CDC76 !important;
+    border-color: #3CDC76 !important;
+}
+
+.btn-outline-info:hover {
+    color: #000000 !important;
+    border-color: #FFC702 !important;
+    background-color: #FFC702 !important;
+}

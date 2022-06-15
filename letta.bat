@@ -1,0 +1,1 @@
+mvn -Prun -DskipTests=true package cargo:start fizzed-watcher:run
